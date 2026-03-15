@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "http://tomato-alb-955741339.ap-south-1.elb.amazonaws.com/api/:path*"
+    }
+  ]
+}
