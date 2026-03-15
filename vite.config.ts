@@ -8,8 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target:
-          "http://takeyourinterview-ags-1-682670051.ap-south-1.elb.amazonaws.com",
+        target: "http://tomato-alb-955741339.ap-south-1.elb.amazonaws.com",
         changeOrigin: true,
         secure: false,
       },
