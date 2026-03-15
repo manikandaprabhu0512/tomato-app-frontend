@@ -32,7 +32,7 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
       auth: {
         token: localStorage.getItem("token"),
       },
-      transports: ["polling", "websocket"], // ← polling FIRST then upgrade
+      transports: ["polling"], // ← polling FIRST then upgrade
       path: "/socket.io",
     });
 
