@@ -103,7 +103,7 @@ const AddAddressPage = () => {
   const fetchAddresses = async () => {
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/api/address/all`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/address/all`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -134,7 +134,7 @@ const AddAddressPage = () => {
     try {
       setAdding(true);
       await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/api/address/new`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/address/new`,
         {
           formattedAddress,
           mobile,
@@ -166,7 +166,7 @@ const AddAddressPage = () => {
     try {
       setDeletingId(id);
       await axios.delete(
-        `${import.meta.env.VITE_SERVER_URL}/api/address/${id}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/address/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

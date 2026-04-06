@@ -37,7 +37,7 @@ const Checkout = () => {
 
       try {
         const { data } = await axios.get(
-          `${import.meta.env.VITE_SERVER_URL}/api/address/all`,
+          `${import.meta.env.VITE_SERVER_URL}/api/restaurant/address/all`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,

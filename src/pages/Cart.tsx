@@ -25,11 +25,11 @@ const Cart = () => {
 
   const restaurant = cart[0].restaurantId as IRestaurant;
 
-  const deliveryFee = subTotal < 250 ? 49 : 0;
+  const deliveryFee = subTotal < 100 ? 49 : 0;
 
   const platfromFee = 7;
 
-  const grandTotal = subTotal + deliveryFee + platfromFee;
+  const grandTotal = (subTotal + deliveryFee + platfromFee).toFixed(2);
 
   const increaseQty = async (itemId: string) => {
     try {
