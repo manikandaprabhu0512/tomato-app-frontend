@@ -11,7 +11,7 @@ const RiderAdmin = ({
   const verify = async () => {
     try {
       await axios.patch(
-        `${import.meta.env.VITE_SERVER_URL}/api/v1/verify/rider/${rider._id}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/admin/verify/rider/${rider._id}`,
         {},
         {
           headers: {

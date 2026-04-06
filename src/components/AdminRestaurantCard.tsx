@@ -11,7 +11,7 @@ const AdminRestaurantCard = ({
   const verify = async () => {
     try {
       await axios.patch(
-        `${import.meta.env.VITE_SERVER_URL}/api/v1/verify/restaurant/${restaurant._id}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/admin/verify/restaurant/${restaurant._id}`,
         {},
         {
           headers: {
