@@ -46,7 +46,7 @@ const RestaurantOrders = ({ restaurantId }: { restaurantId: string }) => {
   const fetchOrders = async () => {
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/api/order/restaurant/${restaurantId}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/order/restaurant/${restaurantId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

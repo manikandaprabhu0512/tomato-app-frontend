@@ -52,7 +52,7 @@ const OrderCard = ({ order, onStatusUpdate }: props) => {
       setLoading(true);
       setRetryVisible(false);
       await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}/api/order/${order._id}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/order/${order._id}`,
         { status },
         {
           headers: {

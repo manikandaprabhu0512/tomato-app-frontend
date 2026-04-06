@@ -80,7 +80,7 @@ const Checkout = () => {
     setCreatingOrder(true);
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/api/order/new`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/order/new`,
         {
           paymentMethod,
           addressId: selectedAddressId,
