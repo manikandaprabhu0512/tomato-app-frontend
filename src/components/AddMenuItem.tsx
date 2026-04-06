@@ -33,7 +33,7 @@ const AddMenuItem = ({ onItemAdded }: { onItemAdded: () => void }) => {
     try {
       setLoading(true);
       await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/api/item/new`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/item/new`,
         formData,
         {
           headers: {

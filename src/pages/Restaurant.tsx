@@ -47,7 +47,7 @@ const Restaurant = () => {
   const fetchMenuItems = async (restaurantId: string) => {
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/api/item/all/${restaurantId}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/item/all/${restaurantId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

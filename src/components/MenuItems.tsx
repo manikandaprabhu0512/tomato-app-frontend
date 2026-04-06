@@ -23,7 +23,7 @@ const MenuItems = ({ items, onItemDeleted, isSeller }: MenuItemsProps) => {
 
     try {
       await axios.delete(
-        `${import.meta.env.VITE_SERVER_URL}/api/item/${itemId}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/item/${itemId}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -42,7 +42,7 @@ const MenuItems = ({ items, onItemDeleted, isSeller }: MenuItemsProps) => {
   const toggleAvailiblity = async (itemId: string) => {
     try {
       const { data } = await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}/api/item/status/${itemId}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/item/status/${itemId}`,
         {},
         {
           headers: {
