@@ -110,7 +110,7 @@ const Checkout = () => {
       const { orderId, amount } = order;
 
       const { data } = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/api/payment/create`,
+        `${import.meta.env.VITE_SERVER_URL}/api/utils/payment/create`,
         {
           orderId,
         },
@@ -129,7 +129,7 @@ const Checkout = () => {
         handler: async (response: any) => {
           try {
             await axios.post(
-              `${import.meta.env.VITE_SERVER_URL}/api/payment/verify`,
+              `${import.meta.env.VITE_SERVER_URL}/api/utils/payment/verify`,
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
@@ -173,7 +173,7 @@ const Checkout = () => {
         await stripePromise;
 
         const { data } = await axios.post(
-          `${import.meta.env.VITE_SERVER_URL}/api/payment/stripe/create`,
+          `${import.meta.env.VITE_SERVER_URL}/api/utils/payment/stripe/create`,
           {
             orderId,
           },
