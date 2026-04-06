@@ -54,7 +54,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     if (!user || user.role !== "customer") return;
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/api/cart/all`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/cart/all`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

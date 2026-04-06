@@ -66,7 +66,7 @@ const MenuItems = ({ items, onItemDeleted, isSeller }: MenuItemsProps) => {
       setLoadingItemId(itemId);
 
       const { data } = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/api/cart/add`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/cart/add`,
         {
           restaurantId,
           itemId,

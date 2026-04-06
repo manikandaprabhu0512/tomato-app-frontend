@@ -35,7 +35,7 @@ const Cart = () => {
     try {
       setLoadingItemId(itemId);
       await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}/api/cart/inc`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/cart/inc`,
         { itemId },
         {
           headers: {
@@ -56,7 +56,7 @@ const Cart = () => {
     try {
       setLoadingItemId(itemId);
       await axios.put(
-        `${import.meta.env.VITE_SERVER_URL}/api/cart/dec`,
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/cart/dec`,
         { itemId },
         {
           headers: {
@@ -78,11 +78,14 @@ const Cart = () => {
     if (!confirm) return;
     try {
       setClearingCart(true);
-      await axios.delete(`${import.meta.env.VITE_SERVER_URL}/api/cart/clear`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+      await axios.delete(
+        `${import.meta.env.VITE_SERVER_URL}/api/restaurant/cart/clear`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         },
-      });
+      );
 
       await fetchCart();
     } catch (error) {
