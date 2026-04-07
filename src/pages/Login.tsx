@@ -13,7 +13,7 @@ type Role = "customer" | "rider" | "seller";
 
 const roles: Role[] = ["customer", "rider", "seller"];
 const EMAIL_LOGIN_URL = `${import.meta.env.VITE_SERVER_URL}/api/auth/login/email`;
-const PHONE_LOGIN_URL = `${import.meta.env.VITE_SERVER_URL}/api/auth/login/phone`;
+const PHONE_OTP_REQUEST_URL = `${import.meta.env.VITE_SERVER_URL}/api/auth/login/phone`;
 const PHONE_OTP_VERIFY_URL = `${import.meta.env.VITE_SERVER_URL}/api/auth/phone/verify-otp`;
 
 const Login = () => {
@@ -78,9 +78,9 @@ const Login = () => {
     setLoading(true);
     try {
       setShowOtpModal(true);
-      // await axios.post(PHONE_OTP_REQUEST_URL, {
-      //   phone: loginForm.phone.trim(),
-      // });
+      await axios.post(PHONE_OTP_REQUEST_URL, {
+        phone: loginForm.phone.trim(),
+      });
       toast.success("OTP sent. Enter the 6-digit code to continue.");
     } catch (error) {
       console.log(error);
@@ -95,29 +95,13 @@ const Login = () => {
     setOtp("");
   };
 
-  const handleLoginSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleEmailLogin = async () => {
     setLoading(true);
     try {
-      const payload =
-        loginMethod === "email"
-          ? {
-              email: loginForm.email.trim(),
-              password: loginForm.password,
-            }
-          : {
-              phone: loginForm.phone.trim(),
-            };
-
-      const url = loginMethod === "email" ? EMAIL_LOGIN_URL : PHONE_LOGIN_URL;
-
-      console.log("Login URL:", url);
-      console.log("Login Payload:", payload);
-
-      const { data } = await axios.post(url, payload);
-
-      console.log("Data: ", data);
+      const { data } = await axios.post(EMAIL_LOGIN_URL, {
+        email: loginForm.email.trim(),
+        password: loginForm.password,
+      });
 
       localStorage.setItem("token", data.token);
       setUser(data.user);
@@ -126,14 +110,21 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
-      toast.error(
-        loginMethod === "email"
-          ? "Unable to login with email and password."
-          : "Unable to login with phone number.",
-      );
+      toast.error("Unable to login with email and password.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLoginSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (loginMethod === "email") {
+      await handleEmailLogin();
+      return;
+    }
+
+    await requestPhoneOtp();
   };
 
   const handleSignupSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -331,14 +322,23 @@ const Login = () => {
                     </label>
                   )}
 
-                  <button
-                    type="submit"
-                    className="w-full rounded-2xl bg-[#E23774] px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-[#c92d66]"
-                  >
-                    {loginMethod === "email"
-                      ? "Login with email"
-                      : "Continue with phone"}
-                  </button>
+                  {loginMethod === "email" ? (
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full rounded-2xl bg-[#E23774] px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-[#c92d66] disabled:cursor-not-allowed disabled:opacity-70"
+                    >
+                      {loading ? "Logging in..." : "Login with email"}
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="w-full rounded-2xl bg-[#E23774] px-4 py-3.5 text-sm font-semibold text-white transition hover:bg-[#c92d66] disabled:cursor-not-allowed disabled:opacity-70"
+                    >
+                      {loading ? "Sending OTP..." : "Send OTP"}
+                    </button>
+                  )}
                 </form>
               </>
             ) : (
