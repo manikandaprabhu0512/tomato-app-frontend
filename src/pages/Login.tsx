@@ -78,9 +78,11 @@ const Login = () => {
     setLoading(true);
     try {
       setShowOtpModal(true);
-      await axios.post(PHONE_OTP_REQUEST_URL, {
-        phone: loginForm.phone.trim(),
+      const response = await axios.post(PHONE_OTP_REQUEST_URL, {
+        phonenumber: loginForm.phone.trim(),
       });
+      console.log("Response", response);
+
       toast.success("OTP sent. Enter the 6-digit code to continue.");
     } catch (error) {
       console.log(error);
@@ -141,7 +143,7 @@ const Login = () => {
     setLoading(true);
     try {
       const { data } = await axios.post(PHONE_OTP_VERIFY_URL, {
-        phone: loginForm.phone.trim(),
+        phonenumber: loginForm.phone.trim(),
         otp,
       });
 
