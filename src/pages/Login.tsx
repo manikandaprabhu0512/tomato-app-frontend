@@ -34,7 +34,6 @@ const Login = () => {
     password: "",
     confirmPassword: "",
     image: "",
-    role: "customer" as Role,
   });
   const navigate = useNavigate();
 
