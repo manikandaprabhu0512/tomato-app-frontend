@@ -9,9 +9,7 @@ import { useAppData } from "../context/AppContext";
 
 type AuthMode = "login" | "signup";
 type LoginMethod = "email" | "phone";
-type Role = "customer" | "rider" | "seller";
 
-const roles: Role[] = ["customer", "rider", "seller"];
 const EMAIL_LOGIN_URL = `${import.meta.env.VITE_SERVER_URL}/api/auth/login/email`;
 const PHONE_OTP_REQUEST_URL = `${import.meta.env.VITE_SERVER_URL}/api/auth/login/phone`;
 const PHONE_OTP_VERIFY_URL = `${import.meta.env.VITE_SERVER_URL}/api/auth/phone/verify-otp`;
@@ -474,33 +472,6 @@ const Login = () => {
                       />
                     </div>
                   </label>
-                </div>
-
-                <div>
-                  <span className="mb-3 block text-sm font-medium text-slate-700">
-                    Select role
-                  </span>
-                  <div className="grid gap-3 sm:grid-cols-3">
-                    {roles.map((role) => (
-                      <button
-                        key={role}
-                        type="button"
-                        onClick={() =>
-                          setSignupForm((current) => ({
-                            ...current,
-                            role,
-                          }))
-                        }
-                        className={`rounded-2xl border px-4 py-3 text-sm font-semibold capitalize transition ${
-                          signupForm.role === role
-                            ? "border-[#E23774] bg-[#fff1f5] text-[#E23774]"
-                            : "border-slate-200 bg-white text-slate-600 hover:border-slate-300"
-                        }`}
-                      >
-                        {role}
-                      </button>
-                    ))}
-                  </div>
                 </div>
 
                 <button
