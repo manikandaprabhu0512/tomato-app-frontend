@@ -159,8 +159,8 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center bg-[linear-gradient(180deg,#fff7f8_0%,#ffffff_45%,#fff4e8_100%)] px-4 py-8">
-      <div className="w-max overflow-hidden rounded-4xl border border-white/70 bg-white shadow-[0_20px_80px_rgba(226,55,116,0.12)]">
+    <div className="min-h-screen flex justify-center bg-[linear-gradient(180deg,#fff7f8_0%,#ffffff_45%,#fff4e8_100%)] px-4 py-8">
+      <div className="flex w-max overflow-hidden rounded-4xl border border-white/70 bg-white shadow-[0_20px_80px_rgba(226,55,116,0.12)]">
         <div className="flex items-center p-5 sm:p-8 lg:p-10">
           <div className="">
             <div className="mb-8 flex items-center justify-between gap-4">

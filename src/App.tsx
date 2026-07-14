@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/protectedRote";
@@ -20,6 +20,13 @@ import RiderDashboard from "./pages/RiderDashboard";
 import Admin from "./pages/Admin";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
+const AppLayout = () => (
+  <>
+    <Navbar />
+    <Outlet />
+  </>
+);
 
 const App = () => {
   const { user, loading } = useAppData();
@@ -142,14 +149,14 @@ const App = () => {
   }
 
   return (
-    <>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route element={<PublicRoute />}>
-            <Route path="/login" element={<Login />} />
-          </Route>
-          <Route element={<ProtectedRoute />}>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<Login />} />
+        </Route>
+
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />
             <Route
               path="/paymentsuccess/:paymentId"
@@ -165,9 +172,9 @@ const App = () => {
             <Route path="/select-role" element={<SelectRole />} />
             <Route path="/account" element={<Account />} />
           </Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
