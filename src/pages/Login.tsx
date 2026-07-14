@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -13,6 +13,7 @@ type LoginMethod = "email" | "phone";
 const EMAIL_LOGIN_URL = `${import.meta.env.VITE_SERVER_URL}/api/auth/login/email`;
 const PHONE_OTP_REQUEST_URL = `${import.meta.env.VITE_SERVER_URL}/api/auth/login/phone`;
 const PHONE_OTP_VERIFY_URL = `${import.meta.env.VITE_SERVER_URL}/api/auth/phone/verify-otp`;
+const OTP_RESEND_COOLDOWN_SECONDS = 60;
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -20,6 +21,7 @@ const Login = () => {
   const [loginMethod, setLoginMethod] = useState<LoginMethod>("phone");
   const [showOtpModal, setShowOtpModal] = useState(false);
   const [otp, setOtp] = useState("");
+  const [resendCooldown, setResendCooldown] = useState(0);
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
@@ -36,6 +38,18 @@ const Login = () => {
   const navigate = useNavigate();
 
   const { setUser, setIsAuth } = useAppData();
+
+  useEffect(() => {
+    if (resendCooldown <= 0) {
+      return;
+    }
+
+    const timerId = window.setTimeout(() => {
+      setResendCooldown((current) => Math.max(current - 1, 0));
+    }, 1000);
+
+    return () => window.clearTimeout(timerId);
+  }, [resendCooldown]);
 
   const responseGoogle = async (authResult: any) => {
     setLoading(true);
@@ -72,14 +86,22 @@ const Login = () => {
       return;
     }
 
+    if (resendCooldown > 0) {
+      toast.error(
+        `Please wait ${resendCooldown}s before requesting another OTP.`,
+      );
+      return;
+    }
+
     setLoading(true);
     try {
-      setShowOtpModal(true);
       const response = await axios.post(PHONE_OTP_REQUEST_URL, {
         phonenumber: loginForm.phone.trim(),
       });
       console.log("Response", response);
 
+      setShowOtpModal(true);
+      setResendCooldown(OTP_RESEND_COOLDOWN_SECONDS);
       toast.success("OTP sent. Enter the 6-digit code to continue.");
     } catch (error) {
       console.log(error);
@@ -92,6 +114,7 @@ const Login = () => {
   const closeOtpModal = () => {
     setShowOtpModal(false);
     setOtp("");
+    setResendCooldown(0);
   };
 
   const handleEmailLogin = async () => {
@@ -555,9 +578,12 @@ const Login = () => {
             <button
               type="button"
               onClick={requestPhoneOtp}
-              className="mt-4 w-full text-sm font-semibold text-[#E23774]"
+              disabled={loading || resendCooldown > 0}
+              className="mt-4 w-full text-sm font-semibold text-[#E23774] transition disabled:cursor-not-allowed disabled:text-slate-400"
             >
-              Resend OTP
+              {resendCooldown > 0
+                ? `Resend OTP in ${resendCooldown}s`
+                : "Resend OTP"}
             </button>
           </div>
         </div>
