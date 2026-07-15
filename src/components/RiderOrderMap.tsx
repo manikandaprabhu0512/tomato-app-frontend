@@ -79,6 +79,8 @@ const RiderOrderMap = ({ order }: Props) => {
   ];
 
   useEffect(() => {
+    console.log("Calling Rider Location...");
+
     const fetchLocation = () => {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
@@ -86,6 +88,7 @@ const RiderOrderMap = ({ order }: Props) => {
           const longitude = pos.coords.longitude;
 
           setRiderLocation([latitude, longitude]);
+          console.log("Rider Location:", latitude, " & ", longitude);
 
           axios.post(
             `${import.meta.env.VITE_SERVER_URL}/api/v1/internal/emit`,

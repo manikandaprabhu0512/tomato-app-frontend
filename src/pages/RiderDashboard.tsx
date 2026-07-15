@@ -133,6 +133,8 @@ const RiderDashboard = () => {
     setToggling(true);
 
     navigator.geolocation.getCurrentPosition(async (pos) => {
+      console.log("Rider Lat: ", pos.coords.latitude);
+      console.log("Rider Long: ", pos.coords.longitude);
       try {
         await axios.patch(
           `${import.meta.env.VITE_SERVER_URL}/api/rider/toggle`,

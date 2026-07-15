@@ -66,6 +66,8 @@ const RestaurantOrders = ({ restaurantId }: { restaurantId: string }) => {
     fetchOrders();
   }, [restaurantId]);
 
+  console.log("Socket: ", socket);
+
   useEffect(() => {
     if (!socket) return;
 

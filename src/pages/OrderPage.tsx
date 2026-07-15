@@ -70,7 +70,7 @@ const OrderPage = () => {
     if (!socket) return;
 
     const onRiderLocation = ({ latitude, longitude }: any) => {
-      console.log("Rider Location:", latitude, longitude);
+      console.log("Rider Location:", latitude, " & ", longitude);
       setRiderLocation([latitude, longitude]);
     };
 
